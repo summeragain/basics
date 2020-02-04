@@ -25,15 +25,21 @@ The second line contains a single string **s**, of **n** characters that describ
 Print a single integer that denotes the number of valleys Gary walked through during his hike.
 
 **Sample Input**
-``` 8
-UDDDUDUU ```
+```
+8
+UDDDUDUU
+```
 
 **Sample Output**
-``` 1 ```
+```
+1
+```
+
 **Explanation**
 If we represent _ as sea level, a step up as /, and a step down as \, Gary's hike can be drawn as:
 ```
 _/\      _
    \    /
-    \/\/ ```
+    \/\/ 
+```
 He enters and leaves one valley.
