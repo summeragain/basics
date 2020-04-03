@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 
@@ -6,6 +7,7 @@ public:
   int maxSubArray(std::vector<int> &nums) {
     int max = 0;
     int maxCurrent = 0;
+    bool hasPositive = false;
 
     for (auto &it : nums) {
       maxCurrent = maxCurrent + it;
@@ -16,6 +18,15 @@ public:
       if (max < maxCurrent) {
         max = maxCurrent;
       }
+
+      if (it > 0) {
+        hasPositive = true;
+      }
+    }
+
+    if (!hasPositive) {
+      auto maxElement = std::max_element(nums.begin(), nums.end());
+      max = *maxElement;
     }
 
     return max;
