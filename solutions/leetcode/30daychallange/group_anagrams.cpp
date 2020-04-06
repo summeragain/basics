@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -7,38 +8,32 @@ using namespace std;
 
 class Solution {
 public:
-  int hasGroup(vector<vector<string>> groups, string str) {
-    for (int i = 0; i < groups.size(); i++) {
-      auto group = groups[i];
+  vector<vector<string>> groupAnagrams(vector<string> &strs) {
+    vector<string> sorted;
+    map<string, vector<string>> grouped;
 
-      if (group.size() > 0 && group[0].size() == str.size()) {
-        string sortedWord = group[0];
-        sort(sortedWord.begin(), sortedWord.end());
+    for (auto &it : strs) {
+      string sortedWord = it;
+      sort(sortedWord.begin(), sortedWord.end());
 
-        string itSortedWord = str;
-        sort(itSortedWord.begin(), itSortedWord.end());
+      sorted.push_back(sortedWord);
+    }
 
-        if (sortedWord == itSortedWord) {
-          return i;
-        }
+    for (int i = 0; i < sorted.size(); i++) {
+      auto it = grouped.find(sorted[i]);
+
+      if (it != grouped.end()) {
+        it->second.push_back(strs[i]);
+      } else {
+        vector<string> anagram{strs[i]};
+        grouped.insert(pair<string, vector<string>>(sorted[i], anagram));
       }
     }
 
-    return -1;
-  }
-
-  vector<vector<string>> groupAnagrams(vector<string> &strs) {
     vector<vector<string>> anagrams{};
 
-    for (auto &it : strs) {
-      auto index = hasGroup(anagrams, it);
-
-      if (index != -1) {
-        anagrams[index].push_back(it);
-      } else {
-        vector<string> anagram{it};
-        anagrams.push_back(anagram);
-      }
+    for (auto it = grouped.begin(); it != grouped.end(); ++it) {
+      anagrams.push_back(it->second);
     }
 
     return anagrams;
