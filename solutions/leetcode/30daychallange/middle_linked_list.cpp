@@ -8,33 +8,16 @@ struct ListNode {
 
 class Solution {
 public:
-  int getSize(ListNode *head) {
-    int counter = 0;
-    ListNode *node = head;
-
-    while (node != NULL) {
-      node = node->next;
-      counter++;
-    }
-
-    return counter;
-  }
-
   ListNode *middleNode(ListNode *head) {
-    if (head == NULL) {
-      return NULL;
+    ListNode *slow = head;
+    ListNode *fast = head;
+
+    while (fast != NULL && fast->next != NULL) {
+      slow = slow->next;
+      fast = fast->next->next;
     }
 
-    int size = getSize(head);
-    int counter = 0;
-    ListNode *node = head;
-
-    while (node != NULL && counter < size / 2) {
-      node = node->next;
-      counter++;
-    }
-
-    return node;
+    return slow;
   }
 };
 
@@ -44,7 +27,7 @@ int main() {
   head.next = &second;
 
   Solution s;
-  s.middleNode(&head);
+  ListNode *middle = s.middleNode(&head);
 
   return 0;
 }
