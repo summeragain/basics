@@ -7,21 +7,33 @@ using namespace std;
 class Solution {
 public:
   string stringShift(string s, vector<vector<int>> &shift) {
-    for (auto &it : shift) {
-      auto direction = it[0];
-      auto amount = it[1];
-      auto pos = direction == 0 ? 0 : s.size() - amount;
+    int counter = 0;
 
-      string substr = s.substr(pos, amount);
-      s.replace(pos, amount, "");
+    for (auto &it : shift) {
+      int direction = it[0];
+      int amount = it[1];
 
       if (direction == 0) {
-        s.append(substr);
+        counter -= amount;
       } else {
-        s.insert(0, substr);
+        counter += amount;
       }
     }
-    return s;
+
+    counter = abs(counter) % s.size() * (counter > 0 ? 1 : -1);
+
+    if (counter == 0) {
+      return s;
+    }
+
+    int amount = abs(counter);
+    int pos = counter > 0 ? s.size() - amount : 0;
+
+    if (counter > 0) {
+      return s.substr(pos, amount) + s.substr(0, pos);
+    } else {
+      return s.substr(amount) + s.substr(pos, amount);
+    }
   }
 };
 
